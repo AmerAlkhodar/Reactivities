@@ -15,7 +15,7 @@ export default function ActivityDetails({activity , cancelSelectActivity , openF
 
 
     return(
-        <Card fluid>
+        <Card fluid id = 'dashboard'>
         <Image src={`/assets/categoryImages/${activity.category}.jpg`}/>
         <Card.Content>
           <Card.Header>{activity.title}</Card.Header>
