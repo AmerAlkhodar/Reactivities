@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
-import { ServerError } from "../models/serverError";
+import { ServerError } from "../models/ServerError";
+
 
 
 
