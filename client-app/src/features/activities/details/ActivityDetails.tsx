@@ -23,7 +23,7 @@ export default observer(function ActivityDetails(){
   },[id , loadActivity , activity])
 
 
-  if (loadingInitial || !activity) return <LoadingComponent/>;
+  if (loadingInitial || !activity) return <LoadingComponent content='loading activites'/>;
     return(
         <Grid>
 
@@ -35,7 +35,7 @@ export default observer(function ActivityDetails(){
 
 
           <Grid.Column width={6}>
-            <ActivityDetailedSidbar/>
+            <ActivityDetailedSidbar activity={activity}/>
           </Grid.Column>
 
         </Grid>

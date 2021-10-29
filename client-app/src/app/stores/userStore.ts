@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { history } from "../..";
 import agent from "../api/agent";
+import { Activity } from "../models/Activity";
 import { User, UserFormValues } from "../models/User";
 import { store } from "./store";
 
@@ -35,6 +36,8 @@ export default class userStore {
 
     logout = () => {
         store.commonStore.setToken(null);
+        window.localStorage.removeItem('jwt');
+        store.activityStore.activityRegistry = new Map<string, Activity>();
         this.user = null ;
         history.push('/');
     }
