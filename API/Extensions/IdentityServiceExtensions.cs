@@ -48,6 +48,7 @@ namespace API.Extensions
                     policy.Requirements.Add(new IsHostRequirement());
                 });
             });
+            
             services.AddTransient<IAuthorizationHandler , IsHostRequirementHandler>();
             services.AddScoped<TokenService>();
 

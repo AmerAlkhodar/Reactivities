@@ -22,8 +22,8 @@ export default function HomePage() {
 
         {userStore.isLoggedIn ? (
           <>
-
-            <Header as='h2' inverted content='Welcome to Reactivities' />
+            <Header as='h2' inverted content='Welcome to Reactivites' style={{ marginTop: 20 }} />
+            <Header as='h2' inverted content='Connect with friends and the world around you on Reactivities.' style={{ marginTop: 20 }} />
             <Button as={Link} to='/activities' size='huge' inverted >
               Go to Activities!
             </Button>
@@ -33,12 +33,13 @@ export default function HomePage() {
         ) : (
 
           <>
-
+            <Header as='h2' inverted content='Welcome to Reactivites' style={{ marginTop: 20 }} />
+            <Header as='h2' inverted content='Connect with friends and the world around you on Reactivities.' style={{ marginBottom: 40 }} />
             <Button onClick={() => modalStroe.openModal(<LoginForm />)} size='huge' inverted >
               Login!
             </Button>
 
-            <Button onClick={() => modalStroe.openModal(<RegisterForm/>)} size='huge' inverted >
+            <Button onClick={() => modalStroe.openModal(<RegisterForm />)} size='huge' inverted >
               Register!
             </Button>
 

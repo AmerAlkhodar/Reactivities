@@ -15,6 +15,7 @@ import LoginForm from '../../features/users/LoginForm';
 import { useStore } from '../stores/store';
 import LoadingComponent from './loadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
+import UnAuthorized from '../../features/errors/UnAuthorized';
 
 
 function App() {
@@ -32,10 +33,12 @@ function App() {
 
   if(!commonStore.appLoaded) return <LoadingComponent content='Loading user information...'/>
 
+  
+
   return (
 
-
-
+    
+    
     <>
       <ToastContainer position='bottom-right' hideProgressBar />
       <ModalContainer/>
@@ -45,18 +48,23 @@ function App() {
         path={'/(.+)'}
         render={() => (
           <>
+            {userStore.user ?
+            <>
             <NavBar />
             <Container style={{ marginTop: '7em' }}>
-              <Switch>
-                <Route exact path='/activities' component={ActivityDashboard} />
-                <Route path='/activities/:id' component={ActivityDetails} />
-                <Route key={Location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />
-                <Route path='/errors' component={TestErrors} />
-                <Route path='/login' component={LoginForm} />
-                <Route path='/server-error' component={ServerError} />
-                <Route component={NotFound} />
-              </Switch>
-            </Container>
+            <Switch>
+              <Route exact path='/activities' component={ActivityDashboard} />
+              <Route path='/activities/:id' component={ActivityDetails} />
+              <Route key={Location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />
+              <Route path='/errors' component={TestErrors} />
+              <Route path='/login' component={LoginForm} />
+              <Route path='/server-error' component={ServerError} />
+              <Route path='/not-found' component={NotFound} />
+            </Switch>
+          </Container>
+          </>
+            : <UnAuthorized/>}
+           
 
           </>
         )} />
