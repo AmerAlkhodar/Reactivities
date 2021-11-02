@@ -11,7 +11,7 @@ interface Props {
 export default function LoadingComponent({ inverted = false, content = 'Loading...' }: Props) {
 
     return (
-        <Dimmer active={true} inverted={inverted}>
+        <Dimmer active={true} inverted={inverted} style={{width: '100%' , hight: '100%'}}>
             <Loader content={content} />
         </Dimmer>
     )

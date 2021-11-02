@@ -15,7 +15,8 @@ import LoginForm from '../../features/users/LoginForm';
 import { useStore } from '../stores/store';
 import LoadingComponent from './loadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
-import UnAuthorized from '../../features/errors/UnAuthorized';
+import ProfilePage from '../../features/Profile/ProfilePage';
+
 
 
 function App() {
@@ -32,9 +33,6 @@ function App() {
   } , [userStore , commonStore])
 
   if(!commonStore.appLoaded) return <LoadingComponent content='Loading user information...'/>
-
-  
-
   return (
 
     
@@ -47,8 +45,8 @@ function App() {
       <Route
         path={'/(.+)'}
         render={() => (
-          <>
-            {userStore.user ?
+          {...userStore.user ? (
+
             <>
             <NavBar />
             <Container style={{ marginTop: '7em' }}>
@@ -56,18 +54,21 @@ function App() {
               <Route exact path='/activities' component={ActivityDashboard} />
               <Route path='/activities/:id' component={ActivityDetails} />
               <Route key={Location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />
+              <Route path='/profiles/:username' component={ProfilePage}/>
               <Route path='/errors' component={TestErrors} />
               <Route path='/login' component={LoginForm} />
               <Route path='/server-error' component={ServerError} />
-              <Route path='/not-found' component={NotFound} />
+              <Route path='/not-found'component={NotFound} />
             </Switch>
           </Container>
           </>
-            : <UnAuthorized/>}
-           
 
-          </>
-        )} />
+
+          ):  <HomePage/>}
+        
+        )} 
+        
+        />
     </>
   );
 }
