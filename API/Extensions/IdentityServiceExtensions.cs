@@ -40,6 +40,19 @@ namespace API.Extensions
                      ValidateAudience = false 
 
                 };
+
+                opt.Events = new JwtBearerEvents{
+                    OnMessageReceived = context => {
+                        var accessToken = context.HttpContext.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path ;
+                        if(!String.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chat"))
+                        {
+                            context.Token = accessToken ; 
+                        }
+                        return Task.CompletedTask ;
+
+                    }
+                };
             });
 
 
