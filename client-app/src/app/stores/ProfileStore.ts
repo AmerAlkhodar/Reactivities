@@ -64,7 +64,17 @@ export default class ProfileStore {
         this.loading = true ; 
         try{
             await agent.Profiles.setMain(photo.id);
-            store.userStore.setImage(photo.url)
+            store.userStore.setImage(photo.url);
+            store.activityStore.activityRegistry.forEach(activity => {
+              if(activity.isHost)  {
+                activity.host!.image = photo.url;
+              }
+              activity.attendees?.forEach(attendee => {
+                if(attendee.username === store.userStore.user?.username) attendee.image = photo.url;
+              })
+             
+            })
+            
             runInAction(() => {
                 if(this.profile){
                     if(this.profile && this.profile.photos){
@@ -95,6 +105,30 @@ export default class ProfileStore {
             
         } catch (error) {
             console.log(error)
+            runInAction(() => this.loading = false)
+        }
+    }
+
+    updateProfile = async (profile: Partial<Profile>) => {
+        this.loading = true ;
+        try {
+            await agent.Profiles.updateProfile(profile);
+            runInAction(() => {
+                if(profile.displayName && profile.displayName !== store.userStore.user?.displayName){
+                  store.userStore.setDisplayName(profile.displayName)
+                }
+                this.profile = {...this.profile , ...profile as Profile}
+                this.loading = false ;
+                store.activityStore.activityRegistry.forEach(activity => {
+                      if(activity.isHost){
+                        activity.host!.displayName = profile.displayName!;
+                      }
+                   
+                })
+            })
+            
+        } catch (error) {
+            console.log(error);
             runInAction(() => this.loading = false)
         }
     }
