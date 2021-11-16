@@ -35,7 +35,27 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
             </Segment>
             <Segment attached clearing>
 
-            <Formik
+    
+
+                <Comment.Group>
+                    
+                    {commentStore.comments.map(comment => (
+                     <Comment>
+                            <Comment.Avatar src={comment.image || '/assets/user.png'} />
+                            <Comment.Content>
+                                <Comment.Author as={Link} to={`/profiles/${comment.username}`}>{comment.displayName}</Comment.Author>
+                                <Comment.Metadata>
+                                    <div>{formatDistanceToNow(comment.createdAt)} ago</div>
+                                </Comment.Metadata>
+                                <Comment.Text style={{whiteSpace: 'pre-wrap'}}>{comment.body}</Comment.Text>
+                            </Comment.Content>
+                        </Comment>
+                    ))}
+
+             
+        
+
+<Formik
                         onSubmit={(values, { resetForm }) => commentStore.createComment(values).then(() => resetForm())}
                         initialValues={{ body: '' }}
                         validationSchema ={Yup.object({
@@ -74,23 +94,6 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                         )}
 
                     </Formik>
-
-                <Comment.Group>
-                    {commentStore.comments.map(comment => (
-                        <Comment key={comment.id}>
-                            <Comment.Avatar src={comment.image || '/assets/user.png'} />
-                            <Comment.Content>
-                                <Comment.Author as={Link} to={`/profiles/${comment.username}`}>{comment.displayName}</Comment.Author>
-                                <Comment.Metadata>
-                                    <div>{formatDistanceToNow(comment.createdAt)} ago</div>
-                                </Comment.Metadata>
-                                <Comment.Text style={{whiteSpace: 'pre-wrap'}}>{comment.body}</Comment.Text>
-                            </Comment.Content>
-                        </Comment>
-
-
-
-                    ))}
                 
 
                 </Comment.Group>
