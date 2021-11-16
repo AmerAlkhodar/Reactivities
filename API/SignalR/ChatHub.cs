@@ -32,6 +32,6 @@ namespace API.SignalR
            await Groups.AddToGroupAsync(Context.ConnectionId , activityId);
            var result = await _mediator.Send(new List.Query{ActivityId = Guid.Parse(activityId)});
            await Clients.Caller.SendAsync("LoadComments" , result.Value);
-        }
+        } 
     }
 }
